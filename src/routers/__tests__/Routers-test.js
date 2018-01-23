@@ -14,7 +14,7 @@ const ROUTERS = {
   StackRouter,
 };
 
-const dummyEventSubscriber = (name: string, handler: () => void) => ({
+const dummyEventSubscriber = (name: string, handler: (*) => void) => ({
   remove: () => {},
 });
 

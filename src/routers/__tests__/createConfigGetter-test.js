@@ -8,7 +8,7 @@ import type {
   NavigationStackScreenOptions,
 } from '../../TypeDefinition';
 
-const dummyEventSubscriber = (name: string, handler: () => void) => ({
+const dummyEventSubscriber = (name: string, handler: (*) => void) => ({
   remove: () => {},
 });
 

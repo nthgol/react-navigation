@@ -48,6 +48,7 @@ export type DeprecatedNavigationNavigateAction = {|
 
 export type NavigationBackAction = {|
   type: 'Navigation/BACK',
+  immediate?: boolean,
   key?: ?string,
 |};
 
@@ -112,7 +113,6 @@ export type DeprecatedNavigationUriAction = {|
 
 export type NavigationCompleteNavigateAction = {|
   type: 'Navigation/COMPLETE_NAVIGATE',
-  key: ?string,
 |};
 
 export type NavigationAction =
@@ -147,6 +147,8 @@ export type PossiblyDeprecatedNavigationAction =
  * The state for the root navigator of our app represents the whole navigation
  * state for the whole app.
  */
+
+// TODO: rename NavigationState to NavigationParentState
 export type NavigationState = {
   /**
    * Index refers to the active child route in the routes array.
@@ -155,8 +157,6 @@ export type NavigationState = {
   routes: Array<NavigationRoute>,
   isNavigating: boolean,
 };
-
-export type NavigationRoute = NavigationLeafRoute | NavigationStateRoute;
 
 export type NavigationLeafRoute = {
   /**
@@ -180,7 +180,15 @@ export type NavigationLeafRoute = {
   params?: NavigationParams,
 };
 
+// A route which describes a navigator state ("the route for a navigator")
 export type NavigationStateRoute = NavigationLeafRoute & NavigationState;
+
+// NavigationRoute is either a screen in a navigator (leaf) | a navigator (state)
+export type NavigationRoute = NavigationLeafRoute | NavigationStateRoute;
+
+// TODO: enable this after renaming NavigationParentState
+// A navigation state for a navigator (top level or child navigator)
+// export type NavigationState = NavigationParentState | NavigationStateRoute;
 
 /**
  * Router
@@ -405,10 +413,15 @@ export type NavigationDrawerScreenOptions = {|
 /**
  * Event subscription setter
  */
+export type NavigationEventPayload = {|
+  +state: NavigationState,
+  +lastState: NavigationState,
+  +action: NavigationAction,
+|};
 
-export type EventSubscriber = (
+export type NavigationEventSubscriber = (
   name: string,
-  handler: (payload: mixed) => void
+  handler: (payload: NavigationEventPayload) => void
 ) => {
   +remove: () => void,
 };
@@ -423,13 +436,13 @@ export type NavigationDispatch = (
 
 export type NavigationProp<S> = {
   +state: S,
-  addListener: EventSubscriber,
+  addListener: NavigationEventSubscriber,
   dispatch: NavigationDispatch,
 };
 
 export type NavigationScreenProp<+S> = {
   +state: S,
-  addListener: EventSubscriber,
+  addListener: NavigationEventSubscriber,
   dispatch: NavigationDispatch,
   goBack: (routeKey?: ?string) => boolean,
   navigate: (

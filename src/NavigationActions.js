@@ -101,9 +101,8 @@ const uri = createAction(
 );
 const completeNavigate = createAction(
   COMPLETE_NAVIGATE,
-  (payload: { key: ?string }): NavigationCompleteNavigateAction => ({
+  (): NavigationCompleteNavigateAction => ({
     type: COMPLETE_NAVIGATE,
-    key: payload.key,
   })
 );
 
