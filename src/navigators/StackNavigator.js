@@ -67,9 +67,7 @@ export default (
       onTransitionStart={onTransitionStart}
       onTransitionEnd={(lastTransition, transition) => {
         const { state, dispatch } = props.navigation;
-        dispatch({
-          type: NavigationActions.COMPLETE_NAVIGATE,
-        });
+        dispatch(NavigationActions.completeTransition());
         onTransitionEnd && onTransitionEnd();
       }}
     />

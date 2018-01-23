@@ -12,7 +12,7 @@ import type {
   NavigationSetParamsAction,
   NavigationResetAction,
   NavigationUriAction,
-  NavigationCompleteNavigateAction,
+  NavigationCompleteTransitionAction,
   NavigationParams,
 } from './TypeDefinition';
 
@@ -22,7 +22,7 @@ const NAVIGATE = 'Navigation/NAVIGATE';
 const RESET = 'Navigation/RESET';
 const SET_PARAMS = 'Navigation/SET_PARAMS';
 const URI = 'Navigation/URI';
-const COMPLETE_NAVIGATE = 'Navigation/COMPLETE_NAVIGATE';
+const COMPLETE_TRANSITION = 'Navigation/COMPLETE_TRANSITION';
 
 const createAction = (type: string, fn: any) => {
   fn.toString = () => type;
@@ -99,10 +99,10 @@ const uri = createAction(
     uri: payload.uri,
   })
 );
-const completeNavigate = createAction(
-  COMPLETE_NAVIGATE,
-  (): NavigationCompleteNavigateAction => ({
-    type: COMPLETE_NAVIGATE,
+const completeTransition = createAction(
+  COMPLETE_TRANSITION,
+  (): NavigationCompleteTransitionAction => ({
+    type: COMPLETE_TRANSITION,
   })
 );
 
@@ -173,7 +173,7 @@ export default {
   RESET,
   SET_PARAMS,
   URI,
-  COMPLETE_NAVIGATE,
+  COMPLETE_TRANSITION,
 
   // Action creators
   back,
@@ -182,7 +182,7 @@ export default {
   reset,
   setParams,
   uri,
-  completeNavigate,
+  completeTransition,
 
   // TODO: Remove once old actions are deprecated
   mapDeprecatedActionAndWarn,

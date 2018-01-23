@@ -111,7 +111,7 @@ export default (
           childRouters[action.routeName] !== undefined
         ) {
           return {
-            isNavigating: false,
+            isTransitioning: false,
             index: 0,
             routes: [
               {
@@ -145,7 +145,7 @@ export default (
         };
         // eslint-disable-next-line no-param-reassign
         state = {
-          isNavigating: false,
+          isTransitioning: false,
           index: 0,
           routes: [route],
         };
@@ -199,17 +199,17 @@ export default (
         }
         return {
           ...StateUtils.push(state, route),
-          isNavigating: action.immediate !== true,
+          isTransitioning: action.immediate !== true,
         };
       }
 
       if (
-        action.type === NavigationActions.COMPLETE_NAVIGATE &&
-        state.isNavigating
+        action.type === NavigationActions.COMPLETE_TRANSITION &&
+        state.isTransitioning
       ) {
         return {
           ...state,
-          isNavigating: false,
+          isTransitioning: false,
         };
       }
 
@@ -313,7 +313,7 @@ export default (
             ...state,
             routes: state.routes.slice(0, backRouteIndex),
             index: backRouteIndex - 1,
-            isNavigating: action.immediate !== true,
+            isTransitioning: action.immediate !== true,
           };
         }
       }

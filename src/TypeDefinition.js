@@ -111,8 +111,8 @@ export type DeprecatedNavigationUriAction = {|
   uri: string,
 |};
 
-export type NavigationCompleteNavigateAction = {|
-  type: 'Navigation/COMPLETE_NAVIGATE',
+export type NavigationCompleteTransitionAction = {|
+  type: 'Navigation/COMPLETE_TRANSITION',
 |};
 
 export type NavigationAction =
@@ -121,7 +121,7 @@ export type NavigationAction =
   | NavigationBackAction
   | NavigationSetParamsAction
   | NavigationResetAction
-  | NavigationCompleteNavigateAction;
+  | NavigationCompleteTransitionAction;
 
 export type DeprecatedNavigationAction =
   | DeprecatedNavigationInitAction
@@ -155,7 +155,7 @@ export type NavigationState = {
    */
   index: number,
   routes: Array<NavigationRoute>,
-  isNavigating: boolean,
+  isTransitioning: boolean,
 };
 
 export type NavigationLeafRoute = {
